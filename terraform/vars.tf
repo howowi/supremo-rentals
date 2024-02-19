@@ -53,38 +53,38 @@ variable "oke_nodepool_cidr_block" {
   default = "10.0.2.0/24"
 }
 
-variable "kubernetes_version" {
-  description = "Kubernetes version"
-}
+# variable "kubernetes_version" {
+#   description = "Kubernetes version"
+# }
 
 # variable "ssh_public_key" {
 #   description = "SSH public key to access node"
 #   type        = string
 # }
 
-variable "node_shape" {
-  description = "Instance shape of the node"
-  default = "VM.Standard.E4.Flex"
-}
+# variable "node_shape" {
+#   description = "Instance shape of the node"
+#   default = "VM.Standard.E4.Flex"
+# }
 
-variable "shape_ocpus" {
-  description = "Number of OCPUs of each node"
-  default = "8"
-}
+# variable "shape_ocpus" {
+#   description = "Number of OCPUs of each node"
+#   default = "8"
+# }
 
-variable "shape_mems" {
-  description = "Memory of each node in GB"
-  default = "128"
-}
+# variable "shape_mems" {
+#   description = "Memory of each node in GB"
+#   default = "128"
+# }
 
-variable "node_size" {
-  description = "Number of worker nodes"
-  default = "2"
-}
+# variable "node_size" {
+#   description = "Number of worker nodes"
+#   default = "2"
+# }
 
-variable "image_os_id" {
-  description = "OS Image OCID of the node pool"
-}
+# variable "image_os_id" {
+#   description = "OS Image OCID of the node pool"
+# }
 
 data "oci_core_services" "all_services" {
 }
