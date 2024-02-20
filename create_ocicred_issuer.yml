@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: oci-profile
+type: Opaque
+stringData:
+  tenancy: ocid1.tenancy.oc1..aaaaaaaaznlqfvs5vwnvyimrvjv3i5w4i7fwznq2dqmsccmdihjpc7nqc46q
+  user: ocid1.user.oc1..aaaaaaaaduv4ii4ah2f7wtcdwjxttr6kk4irobgju4qfwcuaffabh6zub5vq
+  region: ap-singapore-1
+  fingerprint: 02:a0:c5:2d:f9:00:57:ca:0a:65:c6:ee:12:99:45:2e
+  privateKey: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpAIBAAKCAQEAokGq/OI4re1c2Y2ypfRtb2OTEA/UureAIRJpj+OfKiPABaCs
+    UED2vAAAkmYq9RH97T92+iGBjkE9EZw/kYUF5lExEYkY2hSPXlEikbB6MazS2j6P
+    CNi7jW/9KSegAoBmrKkkeupmjXbGmZif1YDZWm0f6+EaGfKrJfNhDanNFaF689gq
+    w8bHWi2OO0m+yWerZ5bRn1W8XwriRK+0MV75zyWP6uUjXkvIzb26J6EHWqU1mm+0
+    Io1Zk8F+h4FbK/PafnDRqjdwTbuEhEO/NBwfMB33Hm7Xt0J2CJfxs81lEk31tIeB
+    Ya05iRCRnShcODzT5JBWK/4jhMQ1nA7zKLHQvwIDAQABAoIBAHeSPReu/mXuDgak
+    zYpO3na/wpiLkhEnOV0l3HUVIS5EujVrepCJz0osFj/M2stPPvmfU2ZxWrAik4Zu
+    xsnOZdKc8rQhfBb6H805rWf/zYzd92StxWqXjV9lsAKsGNa/GOsUmrWaF4kYhrKa
+    Lu9/zK0+zc9eS4Xjtwx4loUjJOdStHxHdmee2l4teNu3zMHqoHHvpp2zeGxR5jjB
+    /mYhKq5THajRtdvcofSXaKVgeH5eWE8KYE2stg7GY2CAUBJ3fQ7K9OFN+9MfwmLL
+    8/rnd1dnV+Ns1eYgFEb9opIJDY+lWgJ9Nfjf38Y7n1mfxtLvEss9Y/pAP2/QSSme
+    Yc/lnAECgYEA0DPmjKzVIpFPYdXE3qdsskhTs3GBRPomzTXTdwDCw1jEPWD266AE
+    xh6rStorcGpHOh+G8U7LK7Y9n7NjDGG4aJh3NYJsyuu2Lh+9ndQixBlXq8B5ygwE
+    PUjEE9MCPwm1Y7EXcMEZdMa4H9DSItAOdpYwae0h2MTFJKwV3vKHbUECgYEAx4GA
+    os0saB5bhzjc5/f1yYTzAvgMlA+k7XACaHwi2EiCa3PBh5rl9OVNDakXSrNaLEKJ
+    3Jv4GUfCR4hn1dXwOH2ogwdr1+GvDmAJrXzVbT6Ov1SaYlYarGSld5k8oH75y/CS
+    U2zwa6IvMnWfdKHytmMcHwGlv//8uoxH5Fhjvf8CgYEAvcYQ5zjCLPf2O172S1yg
+    HwD+ChnzkkPRCkt9rILtA9HtTWUMrEj3EP7zcw7ZeWXl9ny2K01+syExmleQeMC5
+    rd0LC6MONwgSzofv9eRerA/NcafHWvsJAjNJRiiXa44V4ACTNRtNcLuRKK7WWxT5
+    me3bwzF6IHN6nqqcZNL7zgECgYEAq/vHmJCmp1sELB2o0Y/AImip1PVgYoLZ+pWE
+    fe4FW82mIFs5ilzNv7+sHQqXOZ5DLcRuc+9AgQqLQH8mhABZhVlN2yaaoQ+8iPfh
+    X90tX29+PxH/xKXVeKeKvP8sdG8Bh/1rJt/Sofa+GRGs1C6HvRLTOyeAa3ORun8T
+    upU35qECgYBkHB5rFx9aT/+JhNlYBEouWAvQupJRdPKJJ6lM+ygRLwBRSFq6XOns
+    eXfTvZlJ2U/Lop/bMMl30LMSa978feJVurnLL/KBGB1fHeDU/mcOPm0o3HtHKdWS
+    G1usc3AaBt7P1VN8wh1CXHWwFDDSM0SmBg1in2U3pXkTpMqDzFcBOA==
+    -----END RSA PRIVATE KEY-----
+  privateKeyPassphrase: ""
