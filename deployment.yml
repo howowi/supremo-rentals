@@ -11,7 +11,11 @@ metadata:
   labels:
     tier: frontend
   annotations:
+    external-dns.alpha.kubernetes.io/hostname: supremorentals.oracledemo.online
     oci.oraclecloud.com/load-balancer-type: "lb"
+    service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "100"
 spec:
   type: LoadBalancer
   ports:
@@ -51,26 +55,5 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
-        # env:
-        # - name: MDS_HOST
-        #   valueFrom:
-        #     configMapKeyRef:
-        #       name: mds-host-configmaps
-        #       key: mds-host
-        # - name: MDS_DATABASE
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: mds-secret
-        #       key: mds-database
-        # - name: MDS_USER
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: mds-secret
-        #       key: mds-user
-        # - name: MDS_PASSWORD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: mds-secret
-        #       key: mds-password
       imagePullSecrets:
       - name: ocir-secret
