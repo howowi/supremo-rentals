@@ -83,7 +83,6 @@ jobs:
           context: frontend/.
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          # tags: ${{ steps.meta.outputs.tags }}
           outputs: type=image,name=${{ steps.get-ocir-repository.outputs.repo_path }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
