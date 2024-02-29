@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:    
       - name: Checkout
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Use Node.js
         uses: actions/setup-node@v3
@@ -64,8 +64,8 @@ jobs:
         run: |
           echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
   
-      - name: Deploy via OCI DevOps Deployment Pipeline
-        uses: oracle-actions/run-oci-cli-command@v1.1.1
-        with:
-            command: devops deployment create-pipeline-deployment --pipeline-id ${{ secrets.OCI_DEVOPS_PIPELINE_ID }} --display-name deployment-version-${{ env.sha_short }} --deployment-arguments "{\"items\":[{\"name\":\"IMG_TAG\",\"value\":\"${{env.sha_short}}\"}]}"
-            silent: true
+      # - name: Deploy via OCI DevOps Deployment Pipeline
+      #   uses: oracle-actions/run-oci-cli-command@v1.1.1
+      #   with:
+      #       command: devops deployment create-pipeline-deployment --pipeline-id ${{ secrets.OCI_DEVOPS_PIPELINE_ID }} --display-name deployment-version-${{ env.sha_short }} --deployment-arguments "{\"items\":[{\"name\":\"IMG_TAG\",\"value\":\"${{env.sha_short}}\"}]}"
+      #       silent: true
