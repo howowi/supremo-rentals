@@ -98,10 +98,6 @@ jobs:
           path: /tmp/digests/*
           if-no-files-found: error
           retention-days: 1
-  
-      - name: Get git hash
-        run: |
-          echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
 
   merge:
     env:
@@ -136,6 +132,9 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ steps.get-ocir-repository.outputs.repo_path }}
+          tags: |
+            type=sha,prefix=
+
         
       - name: Login to OCI Container Registry
         uses: docker/login-action@v3
@@ -153,9 +152,13 @@ jobs:
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ steps.get-ocir-repository.outputs.repo_path }}:${{ steps.meta.outputs.version }}
+
+      - name: Get git hash
+        run: |
+          echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
         
-      # - name: Deploy via OCI DevOps Deployment Pipeline
-      #   uses: oracle-actions/run-oci-cli-command@v1.1.1
-      #   with:
-      #       command: devops deployment create-pipeline-deployment --pipeline-id ${{ secrets.OCI_DEVOPS_PIPELINE_ID }} --display-name deployment-version-${{ env.sha_short }} --deployment-arguments "{\"items\":[{\"name\":\"IMG_TAG\",\"value\":\"${{env.sha_short}}\"}]}"
-      #       silent: true
+      - name: Deploy via OCI DevOps Deployment Pipeline
+        uses: oracle-actions/run-oci-cli-command@v1.1.1
+        with:
+            command: devops deployment create-pipeline-deployment --pipeline-id ${{ secrets.OCI_DEVOPS_PIPELINE_ID }} --display-name deployment-version-${{ env.sha_short }} --deployment-arguments "{\"items\":[{\"name\":\"IMG_TAG\",\"value\":\"${{env.sha_short}}\"}]}"
+            silent: true
