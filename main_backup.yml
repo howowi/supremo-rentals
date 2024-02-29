@@ -1,0 +1,71 @@
+name: Supremo CICD
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:   
+  Build_Deploy_Supremo_App:
+    env:
+      OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
+      OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
+      OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
+      OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
+      OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log into container registry
+        uses: oracle-actions/login-ocir@v1.2.1
+        with:
+          auth_token: ${{ secrets.OCI_AUTH_TOKEN }}
+
+      - name: Get or create an OCIR Repository
+        uses: oracle-actions/get-ocir-repository@v1.2.1
+        id: get-ocir-repository
+        with:
+          name: frontend/react-supremo
+          compartment: ${{ secrets.OCI_COMPARTMENT_OCID }}
+  
+      - name: build and push and push a container image
+        run: |
+          GIT_HASH=$(git rev-parse --short "$GITHUB_SHA")
+          docker buildx build -t "${{ steps.get-ocir-repository.outputs.repo_path }}:$GIT_HASH" --platform linux/amd64,linux/arm64 --push frontend/.
+  
+      - name: Get git hash
+        run: |
+          echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+  
+      # - name: Deploy via OCI DevOps Deployment Pipeline
+      #   uses: oracle-actions/run-oci-cli-command@v1.1.1
+      #   with:
+      #       command: devops deployment create-pipeline-deployment --pipeline-id ${{ secrets.OCI_DEVOPS_PIPELINE_ID }} --display-name deployment-version-${{ env.sha_short }} --deployment-arguments "{\"items\":[{\"name\":\"IMG_TAG\",\"value\":\"${{env.sha_short}}\"}]}"
+      #       silent: true
