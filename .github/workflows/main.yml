@@ -58,7 +58,7 @@ jobs:
       - name: build and push and push a container image
         run: |
           GIT_HASH=$(git rev-parse --short "$GITHUB_SHA")
-          docker buildx build -t "${{ steps.get-ocir-repository.outputs.repo_path }}:$GIT_HASH" --platform linux/amd64,linux/arm64 --push .
+          docker buildx build -t "${{ steps.get-ocir-repository.outputs.repo_path }}:$GIT_HASH" --platform linux/amd64,linux/arm64 --push frontend/.
   
       - name: Get git hash
         run: |
