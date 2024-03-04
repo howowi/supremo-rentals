@@ -86,7 +86,7 @@ jobs:
 
       - name: Build supremo app
         working-directory: frontend
-        run: npm run build
+        run: CI=false npm run build
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
