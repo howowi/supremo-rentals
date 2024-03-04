@@ -6,7 +6,7 @@ on:
       - main
       
 jobs:   
-  Build_Deploy_Supremo_App:
+  Build_Supremo_App:
     env:
       OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
       OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
@@ -126,7 +126,7 @@ jobs:
       OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
     runs-on: ubuntu-latest
     needs:
-      - Build_Deploy_Supremo_App
+      - Build_Supremo_App
     steps:
       - name: Download digests
         uses: actions/download-artifact@v4
@@ -170,7 +170,34 @@ jobs:
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ steps.get-ocir-repository.outputs.repo_path }}:${{ steps.meta.outputs.version }}
+
+
+  deploy_app:
+    env:
+      OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
+      OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
+      OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
+      OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
+      OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
+    runs-on: ubuntu-latest
+    needs:
+      - merge
+    steps:
+      - name: Get or create an OCIR Repository
+        uses: oracle-actions/get-ocir-repository@v1.2.1
+        id: get-ocir-repository
+        with:
+          name: frontend/react-supremo
+          compartment: ${{ secrets.OCI_COMPARTMENT_OCID }}
         
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.get-ocir-repository.outputs.repo_path }}
+          tags: |
+            type=sha,prefix=
+
       - name: Deploy via OCI DevOps Deployment Pipeline
         uses: oracle-actions/run-oci-cli-command@v1.1.1
         with:
