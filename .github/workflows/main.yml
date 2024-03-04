@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-
-defaults:
-  run:
-    working-directory: frontend
       
 jobs:   
   Build_Deploy_Supremo_App:
@@ -81,12 +77,15 @@ jobs:
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         name: List the state of node modules
         continue-on-error: true
+        working-directory: frontend
         run: npm list
 
       - name: Install dependencies
+        working-directory: frontend
         run: npm install
 
       - name: Build supremo app
+        working-directory: frontend
         run: npm run build
 
       - name: Set up QEMU
