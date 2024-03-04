@@ -43,7 +43,7 @@ function ConfirmBooking() {
     }, [id]);
 
     useEffect(() => {
-      fetch(`http://140.238.167.80:5000/user-service-redis/users/${getUserId}`)
+      fetch(`http://152.67.25.167/user-service-redis/users/${getUserId}`)
           .then((response) => response.json())
           .then((data) => {
             // console.log("from http://146.56.171.43:8081 ", id);
@@ -57,7 +57,7 @@ function ConfirmBooking() {
 
     useEffect(() => {
       console.log('Fetching data for user ID:', getUserId);
-      fetch(`http://140.238.167.80:5000/order-service/user-orders?userid=${getUserId}`)
+      fetch(`http://152.67.25.167/order-service/user-orders?userid=${getUserId}`)
           .then((response) => response.json())
           .then((data) => {
               console.log("Data from server:)) ", data);
