@@ -53,8 +53,9 @@ spec:
         kubernetes.io/arch: amd64
       containers:
       - name: react-frontend
+        image: ${IMG}
         # image: bom.ocir.io/apaccpt01/frontend/react-supremo:${BUILDRUN_HASH}
-        image: bom.ocir.io/apaccpt01/frontend/react-supremo:multiarch.2
+        # image: bom.ocir.io/apaccpt01/frontend/react-supremo:multiarch.2
         ports:
         - containerPort: 80
         resources:
