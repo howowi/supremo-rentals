@@ -6,7 +6,7 @@ on:
       - main
       
 jobs:   
-  Build_Supremo_App:
+  build_supremo_app:
     env:
       OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
       OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
@@ -22,7 +22,6 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - linux/amd64
           - linux/arm64
     steps:
       - name: Prepare
@@ -100,77 +99,8 @@ jobs:
         with:
           context: frontend/.
           platforms: ${{ matrix.platform }}
-          labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=${{ steps.get-ocir-repository.outputs.repo_path }},push-by-digest=true,name-canonical=true,push=true
-
-      - name: Export digest
-        run: |
-          mkdir -p /tmp/digests
-          digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${digest#sha256:}"
-
-      - name: Upload digest
-        uses: actions/upload-artifact@v4
-        with:
-          name: digests-${{ env.PLATFORM_PAIR }}
-          path: /tmp/digests/*
-          if-no-files-found: error
-          retention-days: 1
-
-  merge:
-    env:
-      OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
-      OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
-      OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
-      OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
-      OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
-    runs-on: ubuntu-latest
-    needs:
-      - Build_Supremo_App
-    steps:
-      - name: Download digests
-        uses: actions/download-artifact@v4
-        with:
-          path: /tmp/digests
-          pattern: digests-*
-          merge-multiple: true
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Get or create an OCIR Repository
-        uses: oracle-actions/get-ocir-repository@v1.2.1
-        id: get-ocir-repository
-        with:
-          name: frontend/react-supremo
-          compartment: ${{ secrets.OCI_COMPARTMENT_OCID }}
-        
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ steps.get-ocir-repository.outputs.repo_path }}
-          tags: |
-            type=sha,prefix=
-
-        
-      - name: Login to OCI Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: bom.ocir.io
-          username: ${{ secrets.OCI_USERNAME }}
-          password: ${{ secrets.OCI_AUTH_TOKEN }}
-      
-      - name: Create manifest list and push
-        working-directory: /tmp/digests
-        run: |
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ steps.get-ocir-repository.outputs.repo_path }}@sha256:%s ' *)  
-                
-      - name: Inspect image
-        run: |
-          docker buildx imagetools inspect ${{ steps.get-ocir-repository.outputs.repo_path }}:${{ steps.meta.outputs.version }}
-
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
 
   deploy_app:
     env:
@@ -181,7 +111,7 @@ jobs:
       OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
     runs-on: ubuntu-latest
     needs:
-      - merge
+      - build_supremo_app
     steps:
       - name: Get or create an OCIR Repository
         uses: oracle-actions/get-ocir-repository@v1.2.1
@@ -201,5 +131,5 @@ jobs:
       - name: Deploy via OCI DevOps Deployment Pipeline
         uses: oracle-actions/run-oci-cli-command@v1.1.1
         with:
-            command: devops deployment create-pipeline-deployment --pipeline-id ${{ secrets.OCI_DEVOPS_PIPELINE_ID }} --deployment-arguments "{\"items\":[{\"name\":\"IMG\",\"value\":\"${{ steps.get-ocir-repository.outputs.repo_path }}:${{ steps.meta.outputs.version }}\"}]}"
+            command: devops deployment create-pipeline-deployment --pipeline-id ${{ secrets.OCI_DEVOPS_PIPELINE_ID }} --deployment-arguments "{\"items\":[{\"name\":\"IMG\",\"value\":\"${{ steps.meta.outputs.tags }}\"}]}"
             silent: true

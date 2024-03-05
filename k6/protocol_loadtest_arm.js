@@ -5,7 +5,7 @@ import { sleep, group } from 'k6'
 
 export const options = {
   scenarios: {
-    frontend: {
+    supremoapp: {
       executor: 'ramping-arrival-rate',
       preAllocatedVUs: 100,
       stages: [
@@ -20,43 +20,51 @@ export const options = {
 export async function browserTest() {
   let response
 
-  group('page_2 - http://supremorentalsarm.oracledemo.online/cardetails/t001', function () {
-    response = http.get('http://152.67.25.167/car-service-redis/cars/t001')
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-    response = http.get('http://152.67.25.167/user-service-redis/users/JohnC')
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-    sleep(1.8)
+  group('frontend - http://supremorentalsarm.oracledemo.online/', function () {
+    response = http.get('http://supremorentalsarm.oracledemo.online/', {
+      headers: {
+        'upgrade-insecure-requests': '1',
+      },
+    })
+    response = http.get('http://supremorentalsarm.oracledemo.online/css/open-iconic-bootstrap.min.css')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t001.png')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t002.png')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t003.png')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t004.png')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t005.png')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t006.png')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t007.png')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t008.png')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t009.png')
+    response = http.get('http://supremorentalsarm.oracledemo.online/resources/images/cars/t010.png')
   })
 
-  group('page_3 - http://supremorentalsarm.oracledemo.online/carcheckout/t001', function () {
+  group('page_1 backend - http://supremorentalsarm.oracledemo.online/', function () {
+    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
+    response = http.get('http://152.67.25.167/user-service-redis/users/JohnC')
+    response = http.get('http://152.67.25.167/car-service-redis/cars')
+  })
+
+  group('page_2 backend - http://supremorentalsarm.oracledemo.online/cardetails/t001', function () {
     response = http.get('http://152.67.25.167/car-service-redis/cars/t001')
-
     response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-
     response = http.get('http://152.67.25.167/user-service-redis/users/JohnC')
+    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
+  })
 
+  group('page_3 backend - http://supremorentalsarm.oracledemo.online/carcheckout/t001', function () {
+    response = http.get('http://152.67.25.167/car-service-redis/cars/t001')
+    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
     response = http.get('http://152.67.25.167/user-service-redis/users/JohnC')
-
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-    sleep(1.1)
-
     response = http.post(
       'http://152.67.25.167/order-service/create-order',
-      '{"userid":"JohnC","carid":"t001","brand":"Toyoto","name":"Corolla","from_date":"2024-02-29","end_date":"2024-03-01","duration":1,"ordered":"TRUE"}',
+      '{"userid":"JohnC","carid":"t001","brand":"Toyoto","name":"Corolla","from_date":"2024-03-04","end_date":"2024-03-05","duration":1,"ordered":"TRUE"}',
       {
         headers: {
           'content-type': 'application/json',
         },
       }
     )
-
     response = http.options('http://152.67.25.167/order-service/create-order', null, {
       headers: {
         accept: '*/*',
@@ -68,9 +76,8 @@ export async function browserTest() {
     })
   })
 
-  group('page_4 - http://supremorentalsarm.oracledemo.online/confirmbooking/t001', function () {
+  group('page_4 backend - http://supremorentalsarm.oracledemo.online/confirmbooking/t001', function () {
     response = http.get('http://152.67.25.167/car-service-redis/cars/t001')
     response = http.get('http://152.67.25.167/user-service-redis/users/JohnC')
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
   })
 }
