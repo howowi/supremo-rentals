@@ -40,24 +40,24 @@ export async function browserTest() {
   })
 
   group('page_1 backend - http://supremorentalsarm.oracledemo.online/', function () {
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-    response = http.get('http://152.67.25.167/user-service-redis/users/JohnC')
-    response = http.get('http://152.67.25.167/car-service-redis/cars')
+    response = http.get('http://144.24.107.76/order-service/user-orders?userid=JohnC')
+    response = http.get('http://144.24.107.76/user-service-redis/users/JohnC')
+    response = http.get('http://144.24.107.76/car-service-redis/cars')
   })
 
   group('page_2 backend - http://supremorentalsarm.oracledemo.online/cardetails/t001', function () {
-    response = http.get('http://152.67.25.167/car-service-redis/cars/t001')
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-    response = http.get('http://152.67.25.167/user-service-redis/users/JohnC')
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
+    response = http.get('http://144.24.107.76/car-service-redis/cars/t001')
+    response = http.get('http://144.24.107.76/order-service/user-orders?userid=JohnC')
+    response = http.get('http://144.24.107.76/user-service-redis/users/JohnC')
+    response = http.get('http://144.24.107.76/order-service/user-orders?userid=JohnC')
   })
 
   group('page_3 backend - http://supremorentalsarm.oracledemo.online/carcheckout/t001', function () {
-    response = http.get('http://152.67.25.167/car-service-redis/cars/t001')
-    response = http.get('http://152.67.25.167/order-service/user-orders?userid=JohnC')
-    response = http.get('http://152.67.25.167/user-service-redis/users/JohnC')
+    response = http.get('http://144.24.107.76/car-service-redis/cars/t001')
+    response = http.get('http://144.24.107.76/order-service/user-orders?userid=JohnC')
+    response = http.get('http://144.24.107.76/user-service-redis/users/JohnC')
     response = http.post(
-      'http://152.67.25.167/order-service/create-order',
+      'http://144.24.107.76/order-service/create-order',
       '{"userid":"JohnC","carid":"t001","brand":"Toyoto","name":"Corolla","from_date":"2024-03-04","end_date":"2024-03-05","duration":1,"ordered":"TRUE"}',
       {
         headers: {
@@ -65,7 +65,7 @@ export async function browserTest() {
         },
       }
     )
-    response = http.options('http://152.67.25.167/order-service/create-order', null, {
+    response = http.options('http://144.24.107.76/order-service/create-order', null, {
       headers: {
         accept: '*/*',
         'access-control-request-headers': 'content-type',
@@ -77,7 +77,7 @@ export async function browserTest() {
   })
 
   group('page_4 backend - http://supremorentalsarm.oracledemo.online/confirmbooking/t001', function () {
-    response = http.get('http://152.67.25.167/car-service-redis/cars/t001')
-    response = http.get('http://152.67.25.167/user-service-redis/users/JohnC')
+    response = http.get('http://144.24.107.76/car-service-redis/cars/t001')
+    response = http.get('http://144.24.107.76/user-service-redis/users/JohnC')
   })
 }

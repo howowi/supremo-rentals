@@ -20,7 +20,7 @@ function AskMe({ onLogout, userJsonVal, bookingCount }) {
     useEffect(() => {
         if (getUserId) {
             console.log('Fetching data for user ID:', getUserId);
-            fetch(`http://152.67.25.167/order-service/user-orders?userid=${getUserId}`)
+            fetch(`http://144.24.107.76/order-service/user-orders?userid=${getUserId}`)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log("Data from server:)) ", data);
@@ -78,7 +78,7 @@ function AskMe({ onLogout, userJsonVal, bookingCount }) {
             redirect: 'follow'
         };
 
-        fetch("http://152.67.25.167/askme-search", requestOptions)
+        fetch("http://144.24.107.76/askme-search", requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
