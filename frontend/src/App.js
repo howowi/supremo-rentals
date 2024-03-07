@@ -13,7 +13,7 @@ import './css/style.css';
 
 import '@popperjs/core';
 
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS 
 import 'owl.carousel/dist/assets/owl.carousel.css'; // Import Owl Carousel CSS
 // import 'owl.carousel';
 import 'magnific-popup';
