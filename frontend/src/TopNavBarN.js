@@ -29,7 +29,7 @@ const TopNavBarN = ({ onLogout, userJsonVal, bookingCount, clearFilters }) => {
       setUserID(userId);
       console.log('Fetching data for user ID:', userJsonVal.userid);
 
-      fetch(`http://144.24.107.76/order-service/user-orders?userid=${userId}`)
+      fetch(`http://supremo-api/order-service/user-orders?userid=${userId}`)
         .then((response) => response.json())
         .then((data) => {
           console.log("Data from server:", data.length);
@@ -47,7 +47,7 @@ const TopNavBarN = ({ onLogout, userJsonVal, bookingCount, clearFilters }) => {
       setUserID(userId);
       console.log('Fetching data for user ID: > ', userId);
 
-      fetch(`http://144.24.107.76/order-service/user-orders?userid=${userId}`)
+      fetch(`http://supremo-api/order-service/user-orders?userid=${userId}`)
         .then((response) => response.json())
         .then((data) => {
           console.log("Data from server:>> ", data);

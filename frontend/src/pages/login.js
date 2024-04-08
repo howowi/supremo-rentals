@@ -48,7 +48,7 @@ const Login = () => {
     // myHeaders.append("Content-Type", "application/json",);
     // let raw = JSON.stringify({ userid: username, password });
 
-    // const response = await fetch("http://144.24.107.76/user-service-redis/authn", {
+    // const response = await fetch("http://supremo-api/user-service-redis/authn", {
     //   method: 'POST',
     //   mode: 'cors', // this cannot be 'no-cors'
     //   headers: {

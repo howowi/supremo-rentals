@@ -3,9 +3,9 @@ kind: Certificate
 metadata:
   name: supremo-cert-prod
 spec:
-  commonName: supremorentalsarm.oracledemo.online
+  commonName: supremo.oracledemo.online
   dnsNames:
-    - supremorentalsarm.oracledemo.online
+    - supremo.oracledemo.online
   issuerRef:
     name: letsencrypt-prod
   secretName: supremo-cert-prod
