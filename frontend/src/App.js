@@ -102,7 +102,7 @@ function App(backendData, setShowPopular, setShowFilter, setFilterOptions) {
 
   useEffect(() => {
     // Fetch booking data
-    fetch(`http://supremo-api/order-service/user-orders?userid=${getUserId}`)
+    fetch(`http://supremo-api.oracledemo.online/order-service/user-orders?userid=${getUserId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Data from server:>> ", data);
@@ -115,7 +115,7 @@ function App(backendData, setShowPopular, setShowFilter, setFilterOptions) {
     // Fetch car data
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://supremo-api/user-service-redis/users/${getUserId}`);
+        const response = await fetch(`http://supremo-api.oracledemo.online/user-service-redis/users/${getUserId}`);
         const userData = await response.json();
         setUserData(userData);
 

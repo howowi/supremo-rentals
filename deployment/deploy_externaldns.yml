@@ -29,7 +29,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: external-dns
-  namespace: externaldns
+  namespace: supremo
 ---
 apiVersion: apps/v1
 kind: Deployment

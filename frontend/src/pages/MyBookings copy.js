@@ -33,7 +33,7 @@ function MyBookings({ onLogout, userJsonVal, bookingCount }) {
         }
     };
     useEffect(() => {
-        fetch(`http://supremo-api/user-service-redis/users/${getUserId}`)
+        fetch(`http://supremo-api.oracledemo.online/user-service-redis/users/${getUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 // console.log("from http://146.56.171.43:8081 ", id);
@@ -47,7 +47,7 @@ function MyBookings({ onLogout, userJsonVal, bookingCount }) {
 
     useEffect(() => {
         console.log('Fetching data for user ID:', getUserId);
-        fetch(`http://supremo-api/order-service/user-orders?userid=${getUserId}`)
+        fetch(`http://supremo-api.oracledemo.online/order-service/user-orders?userid=${getUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 console.log("Data from server:)) ", data);
@@ -87,7 +87,7 @@ function MyBookings({ onLogout, userJsonVal, bookingCount }) {
         setSelectedCarId(carId);
         setShowModal(true);
 
-        fetch(`http://supremo-api/car-service-redis/carshealth/${carId}`)
+        fetch(`http://supremo-api.oracledemo.online/car-service-redis/carshealth/${carId}`)
             .then((response) => response.json())
             .then((data) => {
                 console.log("Car Details:", data);

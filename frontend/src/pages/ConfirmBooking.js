@@ -43,7 +43,7 @@ function ConfirmBooking() {
     }, [id]);
 
     useEffect(() => {
-      fetch(`http://supremo-api/user-service-redis/users/${getUserId}`)
+      fetch(`http://supremo-api.oracledemo.online/user-service-redis/users/${getUserId}`)
           .then((response) => response.json())
           .then((data) => {
             // console.log("from http://146.56.171.43:8081 ", id);
@@ -57,7 +57,7 @@ function ConfirmBooking() {
 
     useEffect(() => {
       console.log('Fetching data for user ID:', getUserId);
-      fetch(`http://supremo-api/order-service/user-orders?userid=${getUserId}`)
+      fetch(`http://supremo-api.oracledemo.online/order-service/user-orders?userid=${getUserId}`)
           .then((response) => response.json())
           .then((data) => {
               console.log("Data from server:)) ", data);
