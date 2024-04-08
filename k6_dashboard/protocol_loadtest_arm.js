@@ -24,6 +24,6 @@ export async function browserTest() {
   let response
 
   group('page_1 backend - http://supremorentalsarm.oracledemo.online/', function () {
-    response = http.get('http://supremo-api.oracledemo.online/order-service/user-orders?userid=JohnC')
+    response = http.get('http://api-supremo.oracledemo.online/order-service/user-orders?userid=JohnC')
   })
 }
