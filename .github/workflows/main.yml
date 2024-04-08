@@ -84,6 +84,7 @@ jobs:
           context: frontend/.
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
+          push: true
 
   deploy_app:
     env:
