@@ -121,7 +121,7 @@ function MyBookings({ onLogout, userJsonVal, bookingCount }) {
         console.log("car health check for car id", carId);
         setSelectedCarId(carId);
 
-        fetch(`http://api-supremo.oracledemo.online/car-service-redis/carshealth/${carId}`)
+        fetch(`http://api-supremo.oracledemo.online/car-health/cars/${carId}`)
             .then((response) => response.json())
             .then((data) => {
                 console.log("Car Details:", data);
